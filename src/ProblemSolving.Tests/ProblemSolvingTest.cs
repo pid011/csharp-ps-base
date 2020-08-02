@@ -12,15 +12,42 @@ namespace ProblemSolving.Tests
     {
         private const int TimeLimit = 2000 + 5000;
 
+        [TestMethod]
+        public void Initialize() => new TestCase
+        {
+            CorrectOutput = "0"
+        }.Run();
+
+        [TestMethod, Timeout(TimeLimit)]
+        public void TestCase1() => new TestCase
+        {
+            Input = "1 2",
+            CorrectOutput = "3"
+        }.Run();
+
+        [TestMethod, Timeout(TimeLimit)]
+        public void TestCase2() => new TestCase
+        {
+            Input = string.Join(" ", Enumerable.Range(1, 50)),
+            CorrectOutput = "1275"
+        }.Run();
+
+        [TestMethod, Timeout(TimeLimit)]
+        public void TestCase3() => new TestCase
+        {
+            Input = string.Join(" ", Enumerable.Range(1, 10000)),
+            CorrectOutput = "50005000"
+        }.Run();
+
         private struct TestCase
         {
-            public StringBuilder Input;
-            public StringBuilder CorrectOutput;
+            public string Input;
+            public string CorrectOutput;
 
             public void Run()
             {
-                using var reader = new StringReader(Input.ToString());
-                using var writer = new StringWriter();
+                using StringReader reader = new StringReader(Input ?? string.Empty);
+                using StringWriter writer = new StringWriter();
 
                 Console.SetIn(reader);
                 Console.SetOut(writer);
@@ -29,29 +56,8 @@ namespace ProblemSolving.Tests
 
                 StringBuilder result = writer.GetStringBuilder();
 
-                Assert.AreEqual(result.ToString().Trim(), CorrectOutput.ToString());
+                Assert.AreEqual(result.ToString().Trim(), CorrectOutput ?? string.Empty);
             }
         }
-
-        [TestMethod, Timeout(TimeLimit)]
-        public void TestCase1() => new TestCase
-        {
-            Input = new StringBuilder("1 2"),
-            CorrectOutput = new StringBuilder("3")
-        }.Run();
-
-        [TestMethod, Timeout(TimeLimit)]
-        public void TestCase2() => new TestCase
-        {
-            Input = new StringBuilder(string.Join(" ", Enumerable.Range(1, 50))),
-            CorrectOutput = new StringBuilder("1275")
-        }.Run();
-
-        [TestMethod, Timeout(TimeLimit)]
-        public void TestCase3() => new TestCase
-        {
-            Input = new StringBuilder(string.Join(" ", Enumerable.Range(1, 10000))),
-            CorrectOutput = new StringBuilder("50005000")
-        }.Run();
     }
 }

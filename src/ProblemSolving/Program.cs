@@ -5,11 +5,10 @@ namespace ProblemSolving
 {
     public static class Program
     {
-        public static void Main()
-        {
-            Console.WriteLine(Console.ReadLine().Split().Sum(s => int.Parse(s)));
-
-            //Console.WriteLine(Array.ConvertAll(Console.ReadLine().Split(), int.Parse).Sum());
-        }
+        public static void Main() =>
+            Console.WriteLine(
+                (Console.ReadLine() ?? string.Empty)
+                .Split()
+                .Sum(s => s.Length == 0 ? 0 : int.Parse(s)));
     }
 }
